@@ -1,0 +1,87 @@
+[gd_scene format=3 uid="uid://6flx1epehhjv"]
+
+[ext_resource type="Texture2D" uid="uid://cwomsee6iukfa" path="res://art/Oceanbkg/Background/Sky0.png" id="1_itpcx"]
+[ext_resource type="Texture2D" uid="uid://bjpbmxrlt3qrg" path="res://art/Oceanbkg/Midground/Ocean0.png" id="2_17smi"]
+[ext_resource type="Texture2D" uid="uid://bc8sbqewdg22a" path="res://art/Oceanbkg/Background/Sky1.png" id="3_2xjvj"]
+[ext_resource type="Texture2D" uid="uid://dtu6f3s2sox3y" path="res://art/Oceanbkg/Midground/Ocean2.png" id="4_4s8ad"]
+[ext_resource type="PackedScene" uid="uid://dejvf2we711bk" path="res://scenes/player/player.tscn" id="5_4s8ad"]
+[ext_resource type="Texture2D" uid="uid://deofocgl0j10g" path="res://art/Oceanbkg/Midground/Ocean1.png" id="6_4g03k"]
+
+[node name="DeepLevel" type="Node2D" unique_id=634472293]
+texture_filter = 1
+
+[node name="Backdrop" type="CanvasLayer" parent="." unique_id=1507543265]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="Backdrop" unique_id=15268050]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0627451, 0.21960784, 0.5686275, 1)
+
+[node name="Columns" type="Node2D" parent="." unique_id=1961533205]
+
+[node name="SkyA" type="Sprite2D" parent="Columns" unique_id=702502749]
+scale = Vector2(3, 3)
+texture = ExtResource("1_itpcx")
+centered = false
+
+[node name="SkyB" type="Sprite2D" parent="Columns" unique_id=1757032834]
+position = Vector2(768, 0)
+scale = Vector2(3, 3)
+texture = ExtResource("1_itpcx")
+centered = false
+
+[node name="WaterA" type="Sprite2D" parent="Columns" unique_id=2089555525]
+scale = Vector2(3, 3)
+texture = ExtResource("2_17smi")
+centered = false
+
+[node name="WaterB" type="Sprite2D" parent="Columns" unique_id=742272719]
+position = Vector2(768, 0)
+scale = Vector2(3, 3)
+texture = ExtResource("2_17smi")
+centered = false
+
+[node name="Clouds" type="Parallax2D" parent="." unique_id=2078628485]
+visible = false
+z_index = 1
+scroll_scale = Vector2(0.25, 0.35)
+scroll_offset = Vector2(0, 2)
+repeat_size = Vector2(768, 0)
+
+[node name="Sky1" type="Sprite2D" parent="Clouds" unique_id=16967191]
+position = Vector2(0, -240)
+scale = Vector2(3, 2.3)
+texture = ExtResource("3_2xjvj")
+centered = false
+
+[node name="Reef" type="Parallax2D" parent="." unique_id=25614868]
+z_index = 3
+scroll_scale = Vector2(0.45, 1)
+
+[node name="Ocean2" type="Sprite2D" parent="Reef" unique_id=2048153190]
+position = Vector2(0, 660)
+scale = Vector2(3, 3)
+texture = ExtResource("4_4s8ad")
+centered = false
+
+[node name="1" parent="." unique_id=135042252 instance=ExtResource("5_4s8ad")]
+z_index = 5
+position = Vector2(640, 860)
+
+[node name="Camera2D" parent="1" index="3" unique_id=486548523]
+limit_left = 640
+limit_top = 360
+limit_right = 896
+limit_bottom = 2400
+
+[node name="Wreck" type="Sprite2D" parent="." unique_id=1295497857]
+position = Vector2(760, 2100)
+scale = Vector2(3, 3)
+texture = ExtResource("6_4g03k")
+
+[editable path="1"]
