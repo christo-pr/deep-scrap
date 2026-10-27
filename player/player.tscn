@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://dejvf2we711bk"]
+
+[ext_resource type="Script" uid="uid://dujx2xsoya156" path="res://player/player.gd" id="1_oul6g"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oul6g"]
+size = Vector2(32, 48)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_rkbax"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+
+[node name="Player" type="CharacterBody2D" unique_id=135042252]
+motion_mode = 1
+script = ExtResource("1_oul6g")
+
+[node name="Body" type="Polygon2D" parent="." unique_id=502307638]
+polygon = PackedVector2Array(-16, -24, 16, -24, 16, 24, -16, 24)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=788157641]
+shape = SubResource("RectangleShape2D_oul6g")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=486548523]
+enabled = false
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=36097741]
+replication_config = SubResource("SceneReplicationConfig_rkbax")

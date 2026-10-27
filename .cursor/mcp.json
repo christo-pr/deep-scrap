@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "godot": {
+      "command": "npx",
+      "args": ["@coding-solo/godot-mcp"],
+      "env": {
+        "DEBUG": "true",
+        "GODOT_PATH": "/Users/christofer/Library/Application Support/Godot/app_userdata/Godots/versions/Godot_v4_7-dev1_macos_universal/Godot.app/Contents/MacOS/Godot"
+      }
+    }
+  }
+}
