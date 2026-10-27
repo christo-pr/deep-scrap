@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b8tsvso0t7jbm"]
 
-[ext_resource type="Script" uid="uid://b1o885l7p0i11" path="res://world/sea.gd" id="1_dgw6r"]
-[ext_resource type="Script" uid="uid://crn7k3bsmvom1" path="res://player/touch_stick.gd" id="2_mcky8"]
+[ext_resource type="Script" uid="uid://b1o885l7p0i11" path="res://scripts/world/sea.gd" id="1_dgw6r"]
+[ext_resource type="Script" uid="uid://crn7k3bsmvom1" path="res://scripts/player/touch_stick.gd" id="2_mcky8"]
 
 [node name="Sea" type="Node2D" unique_id=356611636]
 script = ExtResource("1_dgw6r")

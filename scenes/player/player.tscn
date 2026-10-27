@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dejvf2we711bk"]
 
-[ext_resource type="Script" uid="uid://dujx2xsoya156" path="res://player/player.gd" id="1_oul6g"]
+[ext_resource type="Script" uid="uid://dujx2xsoya156" path="res://scripts/player/player.gd" id="1_8afob"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oul6g"]
 size = Vector2(32, 48)
@@ -12,7 +12,7 @@ properties/0/replication_mode = 1
 
 [node name="Player" type="CharacterBody2D" unique_id=135042252]
 motion_mode = 1
-script = ExtResource("1_oul6g")
+script = ExtResource("1_8afob")
 
 [node name="Body" type="Polygon2D" parent="." unique_id=502307638]
 polygon = PackedVector2Array(-16, -24, 16, -24, 16, 24, -16, 24)

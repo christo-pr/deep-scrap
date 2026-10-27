@@ -1,6 +1,7 @@
 extends Node2D
 
-const PLAYER_SCENE := preload("res://player/player.tscn")
+# Player scene at scenes/player
+const PLAYER_SCENE := preload("uid://dejvf2we711bk")
 
 @onready var players: Node2D = %Players
 @onready var lobby: Control = %Lobby
@@ -14,6 +15,22 @@ func _ready() -> void:
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	multiplayer.connection_failed.connect(_on_connection_failed)
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
+
+func _spawn_player(id: int) -> void:
+	if players.has_node(str(id)):
+		return
+	var player := PLAYER_SCENE.instantiate()
+	player.name = str(id)
+	player.position = Vector2(640, 360) if id == 1 else Vector2(760, 360)
+	players.add_child(player, true)
+
+# ===== RCP METHODS =====
+@rpc("any_peer", "reliable")
+func scene_ready() -> void:
+	if not multiplayer.is_server():
+		return
+	_spawn_player(multiplayer.get_remote_sender_id())
+# ===== END RCP METHODS =====
 
 func _on_host_pressed() -> void:
 	var err := Network.host()
@@ -50,17 +67,3 @@ func _on_peer_disconnected(id: int) -> void:
 	var body := players.get_node_or_null(str(id))
 	if body != null:
 		body.queue_free()
-
-func _spawn_player(id: int) -> void:
-	if players.has_node(str(id)):
-		return
-	var player := PLAYER_SCENE.instantiate()
-	player.name = str(id)
-	player.position = Vector2(640, 360) if id == 1 else Vector2(760, 360)
-	players.add_child(player, true)
-
-@rpc("any_peer", "reliable")
-func scene_ready() -> void:
-	if not multiplayer.is_server():
-		return
-	_spawn_player(multiplayer.get_remote_sender_id())
