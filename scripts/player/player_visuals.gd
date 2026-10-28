@@ -3,9 +3,7 @@ extends Node2D
 
 signal attack_finished
 
-const SPEED := 220.0
 const AXIS_BIAS := 1.2
-const REMOTE_MOVE_EPSILON := 0.5
 
 enum Facing { RIGHT, LEFT, UP, DOWN }
 
@@ -15,29 +13,27 @@ enum Facing { RIGHT, LEFT, UP, DOWN }
 
 var facing := Facing.RIGHT
 var _oneshot_playing := false
-var _last_position := Vector2.ZERO
 
 func _ready() -> void:
-	_last_position = player.global_position
 	sprite.play(&"idle_side")
 	sprite.animation_finished.connect(_on_sprite_animation_finished)
 
 func _physics_process(_delta: float) -> void:
-	var direction := player.global_position - _last_position
-	
-	if direction.length() < REMOTE_MOVE_EPSILON:
-		direction = Vector2.ZERO
-	_last_position = player.global_position
-
-	if direction != Vector2.ZERO:
-		_update_facing(direction)
-	_play_locomotion(direction != Vector2.ZERO)
+	facing = player.net_facing as Facing
+	_play_locomotion(player.net_moving)
 
 func play_attack() -> bool:
 	if _is_locked():
 		return false
-	var anim := _attack_anim()
+	var anim := attack_anim()
 	_apply_sprite(anim, facing == Facing.LEFT, false)
+	_oneshot_playing = true
+	return true
+
+func play_attack_forced(anim: StringName, flip: bool) -> bool:
+	if _is_locked():
+		return false
+	_apply_sprite(anim, flip, false)
 	_oneshot_playing = true
 	return true
 
@@ -48,8 +44,7 @@ func hurt() -> void:
 	_apply_sprite(anim, facing == Facing.LEFT, false)
 	_oneshot_playing = true
 
-
-func _update_facing(direction: Vector2) -> void:
+func update_facing(direction: Vector2) -> void:
 	var horizontal := absf(direction.x)
 	var vertical := absf(direction.y)
 	var using_side := facing == Facing.LEFT or facing == Facing.RIGHT
@@ -63,6 +58,14 @@ func _update_facing(direction: Vector2) -> void:
 			facing = Facing.LEFT if direction.x < 0.0 else Facing.RIGHT
 		elif vertical > 0.0:
 			facing = Facing.UP if direction.y < 0.0 else Facing.DOWN
+
+func attack_anim() -> StringName:
+	var moving := player.velocity.length() > 1.0
+	if not moving or facing == Facing.DOWN:
+		return &"attack_idle"
+	if facing == Facing.UP:
+		return &"attack_up"
+	return &"attack_side"
 
 func _play_locomotion(moving: bool) -> void:
 	if _is_locked():
@@ -79,14 +82,6 @@ func _locomotion_anim(moving: bool) -> StringName:
 			return &"idle_down"
 		return &"swim_side"
 	return &"idle_side"
-
-func _attack_anim() -> StringName:
-	var moving := player.velocity.length() > 1.0
-	if not moving or facing == Facing.DOWN:
-		return &"attack_idle"
-	if facing == Facing.UP:
-		return &"attack_up"
-	return &"attack_side"
 
 func _is_locked() -> bool:
 	return _oneshot_playing
@@ -108,6 +103,6 @@ func _on_sprite_animation_finished() -> void:
 		return
 	var was_attack := sprite.animation.begins_with("attack")
 	_oneshot_playing = false
-	_play_locomotion(player.velocity.length() > 1.0)
+	_play_locomotion(player.net_moving)
 	if was_attack:
 		attack_finished.emit()

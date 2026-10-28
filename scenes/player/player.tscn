@@ -526,10 +526,18 @@ size = Vector2(124, 32)
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
 properties/0/replication_mode = 1
+properties/1/path = NodePath(".:net_moving")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath(".:net_facing")
+properties/2/spawn = true
+properties/2/replication_mode = 2
 
 [node name="Player" type="CharacterBody2D" unique_id=135042252]
 motion_mode = 1
 script = ExtResource("1_8afob")
+net_moving = null
+net_facing = null
 
 [node name="Visuals" type="Node2D" parent="." unique_id=1776622854 node_paths=PackedStringArray("player")]
 script = ExtResource("2_ugbui")
@@ -538,7 +546,7 @@ player = NodePath("..")
 [node name="Sprite" type="AnimatedSprite2D" parent="Visuals" unique_id=420038004]
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_5gtgg")
-animation = &"swim_up"
+animation = &"idle_side"
 
 [node name="Body" type="Polygon2D" parent="." unique_id=502307638]
 visible = false
