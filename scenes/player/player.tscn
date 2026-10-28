@@ -371,7 +371,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_bbmj2")
 }],
-"loop": false,
+"loop": true,
 "name": &"hurt_idle",
 "speed": 10.0
 }, {
@@ -385,7 +385,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_5q8fn")
 }],
-"loop": false,
+"loop": true,
 "name": &"hurt_side",
 "speed": 10.0
 }, {
@@ -399,7 +399,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vo27k")
 }],
-"loop": false,
+"loop": true,
 "name": &"hurt_up",
 "speed": 10.0
 }, {
@@ -546,11 +546,7 @@ player = NodePath("..")
 [node name="Sprite" type="AnimatedSprite2D" parent="Visuals" unique_id=420038004]
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_5gtgg")
-animation = &"idle_side"
-
-[node name="Body" type="Polygon2D" parent="." unique_id=502307638]
-visible = false
-polygon = PackedVector2Array(-16, -24, 16, -24, 16, 24, -16, 24)
+animation = &"hurt_side"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=788157641]
 position = Vector2(-7.5, 7.5)

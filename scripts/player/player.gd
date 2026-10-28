@@ -3,15 +3,14 @@ extends CharacterBody2D
 
 const SPEED := 220.0
 
-@onready var body: Polygon2D = $Body
 @onready var camera: Camera2D = $Camera2D
 @onready var playerVisuals: PlayerVisuals = $Visuals
 
 @export var net_moving := false
 @export var net_facing := 0
-@export var air_max := 100.0
-@export var air_drain := 12.0
-@export var air_refill := 20
+@export var air_max := 30.0
+@export var air_drain := 1.0
+@export var air_refill := 10
 
 var _is_attacking := false
 var is_underwater := false
@@ -22,7 +21,7 @@ func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
 
 func _ready() -> void:
-	body.color = Color(0.2, 0.75, 0.95) if str(name) == "1" else Color(0.95, 0.55, 0.2)
+	air = air_max
 	camera.enabled = is_multiplayer_authority()
 	playerVisuals.attack_finished.connect(_on_attack_finished)
 
@@ -68,6 +67,7 @@ func _update_air(delta: float) -> void:
 		air = maxf(air - air_drain * delta, 0.0)
 	else:
 		air = minf(air + air_refill * delta, air_max)
+	playerVisuals.set_air_feedback(air, is_underwater)
 	_air_log += delta
 	if _air_log < 0.5:
 		return

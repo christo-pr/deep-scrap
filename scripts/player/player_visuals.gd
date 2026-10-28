@@ -13,6 +13,7 @@ enum Facing { RIGHT, LEFT, UP, DOWN }
 
 var facing := Facing.RIGHT
 var _oneshot_playing := false
+var _low_air := false
 
 func _ready() -> void:
 	sprite.play(&"idle_side")
@@ -67,6 +68,10 @@ func attack_anim() -> StringName:
 		return &"attack_up"
 	return &"attack_side"
 
+func set_air_feedback(air_left: float, underwater: bool) -> void:
+	_low_air = underwater and air_left <= 25.0
+	sprite.speed_scale = 1.2 if underwater and air_left <= 20.0 else 0.8
+
 func _play_locomotion(moving: bool) -> void:
 	if _is_locked():
 		return
@@ -75,6 +80,12 @@ func _play_locomotion(moving: bool) -> void:
 	_apply_sprite(anim, flip, moving)
 
 func _locomotion_anim(moving: bool) -> StringName:
+	if _low_air:
+		if moving and facing == Facing.UP:
+			return &"hurt_up"
+		if moving and (facing == Facing.LEFT or facing == Facing.RIGHT):
+			return &"hurt_side"
+		return &"hurt_idle"
 	if moving:
 		if facing == Facing.UP:
 			return &"swim_up"
