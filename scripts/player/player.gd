@@ -9,9 +9,14 @@ const SPEED := 220.0
 
 @export var net_moving := false
 @export var net_facing := 0
+@export var air_max := 100.0
+@export var air_drain := 12.0
+@export var air_refill := 20
 
 var _is_attacking := false
 var is_underwater := false
+var air := air_max
+var _air_log := 0.0
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
@@ -21,7 +26,7 @@ func _ready() -> void:
 	camera.enabled = is_multiplayer_authority()
 	playerVisuals.attack_finished.connect(_on_attack_finished)
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority():
 		return
 
@@ -44,6 +49,7 @@ func _physics_process(_delta: float) -> void:
 	net_facing = playerVisuals.facing
 	velocity = direction * SPEED
 	move_and_slide()
+	_update_air(delta)
 
 func set_underwater(under: bool) -> void:
 	is_underwater = under
@@ -57,5 +63,18 @@ func net_play_attack(anim: String, flip: bool) -> void:
 		_is_attacking = true
 # ===== END RCP METHODS =====
 
+func _update_air(delta: float) -> void:
+	if is_underwater:
+		air = maxf(air - air_drain * delta, 0.0)
+	else:
+		air = minf(air + air_refill * delta, air_max)
+	_air_log += delta
+	if _air_log < 0.5:
+		return
+	_air_log = 0.0
+	print("air %.0f  %s" % [air, "under" if is_underwater else "surface"])
+	if air <= 0.0:
+		print("out of air")
+	
 func _on_attack_finished() -> void:
 	_is_attacking = false
