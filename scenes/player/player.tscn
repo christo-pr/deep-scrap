@@ -534,10 +534,10 @@ properties/2/spawn = true
 properties/2/replication_mode = 2
 
 [node name="Player" type="CharacterBody2D" unique_id=135042252]
+collision_layer = 2
+collision_mask = 2
 motion_mode = 1
 script = ExtResource("1_8afob")
-net_moving = null
-net_facing = null
 
 [node name="Visuals" type="Node2D" parent="." unique_id=1776622854 node_paths=PackedStringArray("player")]
 script = ExtResource("2_ugbui")

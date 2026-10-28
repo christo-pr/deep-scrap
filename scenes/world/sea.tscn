@@ -1,20 +1,13 @@
 [gd_scene format=3 uid="uid://b8tsvso0t7jbm"]
 
 [ext_resource type="Script" uid="uid://b1o885l7p0i11" path="res://scripts/world/sea.gd" id="1_dgw6r"]
+[ext_resource type="PackedScene" uid="uid://50qpwrnpql7r" path="res://scenes/world/water_test.tscn" id="2_51whp"]
 [ext_resource type="Script" uid="uid://crn7k3bsmvom1" path="res://scripts/player/touch_stick.gd" id="2_mcky8"]
 
 [node name="Sea" type="Node2D" unique_id=356611636]
 script = ExtResource("1_dgw6r")
 
-[node name="Landmarks" type="Node2D" parent="." unique_id=599070638]
-
-[node name="RockA" type="Polygon2D" parent="Landmarks" unique_id=1531372018]
-position = Vector2(27, 62)
-polygon = PackedVector2Array(15, 38, 34, 30, 40, 38, 38, 47, 20, 53)
-
-[node name="RockA2" type="Polygon2D" parent="Landmarks" unique_id=274470111]
-position = Vector2(118, 85)
-polygon = PackedVector2Array(15, 38, 34, 30, 40, 38, 38, 47, 20, 53)
+[node name="WaterTest" parent="." unique_id=470761294 instance=ExtResource("2_51whp")]
 
 [node name="Players" type="Node2D" parent="." unique_id=1700782033]
 unique_name_in_owner = true

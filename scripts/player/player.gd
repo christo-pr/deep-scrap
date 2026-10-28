@@ -11,7 +11,7 @@ const SPEED := 220.0
 @export var net_facing := 0
 
 var _is_attacking := false
-
+var is_underwater := false
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
@@ -45,6 +45,11 @@ func _physics_process(_delta: float) -> void:
 	velocity = direction * SPEED
 	move_and_slide()
 
+func set_underwater(under: bool) -> void:
+	is_underwater = under
+	modulate = Color(0.45, 0.7, 1.0) if under else Color.WHITE
+	print("underwater" if under else "surface")
+	
 # ===== RCP METHODS =====
 @rpc("authority", "call_local", "reliable")
 func net_play_attack(anim: String, flip: bool) -> void:

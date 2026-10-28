@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://50qpwrnpql7r"]
+
+[ext_resource type="Script" uid="uid://3pyd5jitcpv7" path="res://scripts/world/water_volume.gd" id="1_8oek8"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_8oek8"]
+b = Vector2(1280, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_so03r"]
+size = Vector2(4000, 4000)
+
+[node name="WaterTest" type="Node2D" unique_id=470761294]
+
+[node name="TopLimit" type="StaticBody2D" parent="." unique_id=1313197874]
+position = Vector2(0, 360)
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TopLimit" unique_id=487716912]
+shape = SubResource("SegmentShape2D_8oek8")
+debug_color = Color(0.7014107, 0.12315822, 0.3264042, 0.592)
+
+[node name="Water" type="Area2D" parent="." unique_id=1488337810]
+position = Vector2(640, 360)
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+script = ExtResource("1_8oek8")
+
+[node name="Fill" type="Polygon2D" parent="Water" unique_id=633898987]
+color = Color(0.09320182, 0.4788676, 0.76862043, 0.35000002)
+polygon = PackedVector2Array(-2000, 0, 2000, 0, 2000, 4000, -2000, 4000)
+
+[node name="RockA" type="Polygon2D" parent="Water" unique_id=1658278378]
+position = Vector2(27, 62)
+polygon = PackedVector2Array(15, 38, 34, 30, 40, 38, 38, 47, 20, 53)
+
+[node name="RockA2" type="Polygon2D" parent="Water" unique_id=985291356]
+position = Vector2(118, 85)
+polygon = PackedVector2Array(15, 38, 34, 30, 40, 38, 38, 47, 20, 53)
+
+[node name="Surface" type="Line2D" parent="Water" unique_id=1387494726]
+z_index = 1
+points = PackedVector2Array(-2000, 0, 2000, 0)
+width = 6.0
+default_color = Color(0.23529412, 1, 1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Water" unique_id=2134503149]
+position = Vector2(0, 2040)
+shape = SubResource("RectangleShape2D_so03r")
