@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://j10dx41uqpri"]
+
+[ext_resource type="Script" uid="uid://dyw80eqqi0ohg" path="res://scripts/ui/hot_bar.gd" id="1_fby6w"]
+[ext_resource type="StyleBox" uid="uid://0wd3hr2hcpky" path="res://resources/hotbar_button_styles.tres" id="2_ow0n6"]
+[ext_resource type="ButtonGroup" uid="uid://41cjstbtyut5" path="res://resources/hotbar_button_group.tres" id="3_m218w"]
+
+[node name="HotBar" type="Control" unique_id=1609605988]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_fby6w")
+
+[node name="Bar" type="MarginContainer" parent="." unique_id=1384116426]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -176.0
+offset_top = -112.0
+offset_right = 176.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="Row" type="HBoxContainer" parent="Bar" unique_id=8289316]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Slot" type="Button" parent="Bar/Row" unique_id=787361532]
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_mode = 0
+theme_override_styles/normal = ExtResource("2_ow0n6")
+theme_override_styles/pressed = ExtResource("2_ow0n6")
+theme_override_styles/hover_pressed = ExtResource("2_ow0n6")
+theme_override_styles/focus = ExtResource("2_ow0n6")
+toggle_mode = true
+button_group = ExtResource("3_m218w")
+
+[node name="Slot2" type="Button" parent="Bar/Row" unique_id=1517627121]
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_mode = 0
+theme_override_styles/normal = ExtResource("2_ow0n6")
+theme_override_styles/pressed = ExtResource("2_ow0n6")
+theme_override_styles/hover_pressed = ExtResource("2_ow0n6")
+theme_override_styles/focus = ExtResource("2_ow0n6")
+toggle_mode = true
+button_group = ExtResource("3_m218w")
+
+[node name="Slot3" type="Button" parent="Bar/Row" unique_id=1231696897]
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_mode = 0
+theme_override_styles/normal = ExtResource("2_ow0n6")
+theme_override_styles/pressed = ExtResource("2_ow0n6")
+theme_override_styles/hover_pressed = ExtResource("2_ow0n6")
+theme_override_styles/focus = ExtResource("2_ow0n6")
+toggle_mode = true
+button_group = ExtResource("3_m218w")
+
+[node name="Slot4" type="Button" parent="Bar/Row" unique_id=1385018578]
+custom_minimum_size = Vector2(72, 72)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+focus_mode = 0
+theme_override_styles/normal = ExtResource("2_ow0n6")
+theme_override_styles/pressed = ExtResource("2_ow0n6")
+theme_override_styles/hover_pressed = ExtResource("2_ow0n6")
+theme_override_styles/focus = ExtResource("2_ow0n6")
+toggle_mode = true
+button_group = ExtResource("3_m218w")

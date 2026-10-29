@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://50qpwrnpql7r" path="res://scenes/world/water_test.tscn" id="2_51whp"]
 [ext_resource type="PackedScene" uid="uid://ci4a5ko8crxvo" path="res://scenes/ui/controls.tscn" id="3_51whp"]
 [ext_resource type="PackedScene" uid="uid://m2cv3cwrljnd" path="res://scenes/ui/lobby.tscn" id="4_q8u00"]
+[ext_resource type="PackedScene" uid="uid://j10dx41uqpri" path="res://scenes/ui/hot_bar.tscn" id="5_jb7dh"]
 
 [node name="Sea" type="Node2D" unique_id=356611636]
 script = ExtResource("1_dgw6r")
@@ -27,6 +28,8 @@ spawn_limit = 2
 
 [node name="Lobby" parent="UI" unique_id=686444939 instance=ExtResource("4_q8u00")]
 unique_name_in_owner = true
+
+[node name="HotBar" parent="UI" unique_id=1609605988 instance=ExtResource("5_jb7dh")]
 
 [node name="StatusLabel" type="Label" parent="UI" unique_id=1403976214]
 unique_name_in_owner = true
