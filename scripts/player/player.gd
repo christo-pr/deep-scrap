@@ -5,6 +5,7 @@ const SPEED := 220.0
 
 @onready var camera: Camera2D = $Camera2D
 @onready var playerVisuals: PlayerVisuals = $Visuals
+@onready var carry: Carry = $Carry
 
 @export var net_moving := false
 @export var net_facing := 0
@@ -24,6 +25,11 @@ func _ready() -> void:
 	air = air_max
 	camera.enabled = is_multiplayer_authority()
 	playerVisuals.attack_finished.connect(_on_attack_finished)
+	
+	if is_multiplayer_authority():
+		var bar := get_tree().get_first_node_in_group(&"hotbar")
+		if bar != null and bar.has_method(&"bind_player"):
+			bar.bind_player(self)
 
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority():
@@ -33,6 +39,9 @@ func _physics_process(delta: float) -> void:
 		var anim := playerVisuals.attack_anim()
 		var flip := playerVisuals.facing == PlayerVisuals.Facing.LEFT
 		net_play_attack.rpc(anim, flip)
+	
+	if Input.is_action_just_pressed(&"use_carry"):
+		carry.use_selected()
 
 	var direction := Vector2.ZERO
 	if not _is_attacking:
@@ -54,7 +63,12 @@ func set_underwater(under: bool) -> void:
 	is_underwater = under
 	modulate = Color(0.45, 0.7, 1.0) if under else Color.WHITE
 	print("underwater" if under else "surface")
-	
+
+func apply_grant(stat: StringName, amount: float) -> void:
+	if stat == &"air":
+		air = minf(air + amount, air_max)
+	# TODO: More grants to add
+
 # ===== RCP METHODS =====
 @rpc("authority", "call_local", "reliable")
 func net_play_attack(anim: String, flip: bool) -> void:

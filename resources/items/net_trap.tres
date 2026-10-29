@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://b46oiheh8vtxc"]
+
+[ext_resource type="Script" uid="uid://dix7xo76h1hle" path="res://scripts/items/items_data.gd" id="1_tll22"]
+
+[resource]
+script = ExtResource("1_tll22")
+id = &"net_trap"
+display_name = "Net Trap"
+use_kind = 2
+metadata/_custom_type_script = "uid://dix7xo76h1hle"

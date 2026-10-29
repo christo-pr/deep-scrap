@@ -29,6 +29,8 @@ func _make_player(data: Dictionary) -> Node:
 	var player := PLAYER_SCENE.instantiate()
 	player.name = str(data["id"])
 	player.position = data["position"]
+	var hands := player.get_node("Carry") as Carry
+	hands.place_requested.connect(_spawn_prop)
 	return player
 
 # ===== RCP METHODS =====
@@ -74,3 +76,8 @@ func _on_peer_disconnected(id: int) -> void:
 	var body := players.get_node_or_null(str(id))
 	if body != null:
 		body.queue_free()
+
+func _spawn_prop(scene: PackedScene, at: Vector2) -> void:
+	var prop := scene.instantiate()
+	prop.global_position = at
+	%Props.add_child(prop)

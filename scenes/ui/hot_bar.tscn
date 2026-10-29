@@ -47,6 +47,24 @@ theme_override_styles/hover_pressed = ExtResource("2_ow0n6")
 theme_override_styles/focus = ExtResource("2_ow0n6")
 toggle_mode = true
 button_group = ExtResource("3_m218w")
+expand_icon = true
+
+[node name="Count" type="Label" parent="Bar/Row/Slot" unique_id=671736566]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -23.0
+offset_right = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 14
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="Slot2" type="Button" parent="Bar/Row" unique_id=1517627121]
 custom_minimum_size = Vector2(72, 72)
@@ -60,6 +78,24 @@ theme_override_styles/hover_pressed = ExtResource("2_ow0n6")
 theme_override_styles/focus = ExtResource("2_ow0n6")
 toggle_mode = true
 button_group = ExtResource("3_m218w")
+expand_icon = true
+
+[node name="Count" type="Label" parent="Bar/Row/Slot2" unique_id=183686857]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -23.0
+offset_right = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 14
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="Slot3" type="Button" parent="Bar/Row" unique_id=1231696897]
 custom_minimum_size = Vector2(72, 72)
@@ -73,6 +109,24 @@ theme_override_styles/hover_pressed = ExtResource("2_ow0n6")
 theme_override_styles/focus = ExtResource("2_ow0n6")
 toggle_mode = true
 button_group = ExtResource("3_m218w")
+expand_icon = true
+
+[node name="Count" type="Label" parent="Bar/Row/Slot3" unique_id=1616312495]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -23.0
+offset_right = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 14
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="Slot4" type="Button" parent="Bar/Row" unique_id=1385018578]
 custom_minimum_size = Vector2(72, 72)
@@ -86,3 +140,21 @@ theme_override_styles/hover_pressed = ExtResource("2_ow0n6")
 theme_override_styles/focus = ExtResource("2_ow0n6")
 toggle_mode = true
 button_group = ExtResource("3_m218w")
+expand_icon = true
+
+[node name="Count" type="Label" parent="Bar/Row/Slot4" unique_id=1892128878]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -23.0
+offset_right = -5.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 14
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1

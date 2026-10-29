@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://k3wes1n086qu" path="res://art/1 Woodcutter/Attack2.png" id="4_fcs02"]
 [ext_resource type="Texture2D" uid="uid://b205b4qwfjvy6" path="res://art/1 Woodcutter/Hurt3.png" id="4_h17s1"]
 [ext_resource type="Texture2D" uid="uid://ds6u8r75m5ib7" path="res://art/1 Woodcutter/Swim2.png" id="6_qek5x"]
+[ext_resource type="Script" uid="uid://g12tkily3akx" path="res://scripts/player/carry.gd" id="15_fcs02"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ds1xl"]
 atlas = ExtResource("2_gx1jg")
@@ -559,6 +560,9 @@ position_smoothing_enabled = true
 position_smoothing_speed = 6.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
+
+[node name="Carry" type="Node" parent="." unique_id=2088420695]
+script = ExtResource("15_fcs02")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=36097741]
 replication_config = SubResource("SceneReplicationConfig_rkbax")
