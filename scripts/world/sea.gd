@@ -4,17 +4,15 @@ extends Node2D
 const PLAYER_SCENE := preload("uid://dejvf2we711bk")
 
 @onready var players: Node2D = %Players
-@onready var lobby: Control = %Lobby
-@onready var status_label: Label = %StatusLabel
-@onready var ip_edit: LineEdit = %IpEdit
+@onready var lobby: Lobby = %Lobby
 @onready var spawn_point: Marker2D = $Players/SpawnPoint
 @onready var spawner: MultiplayerSpawner = $MultiplayerSpawner
+@onready var status_label: Label = %StatusLabel
 
 func _ready() -> void:
 	spawner.spawn_function = _make_player
-	ip_edit.text = Network.lan_ip()
-	%HostButton.pressed.connect(_on_host_pressed)
-	%JoinButton.pressed.connect(_on_join_pressed)
+	lobby.on_host_pressed.connect(_on_host_pressed)
+	lobby.on_join_pressed.connect(_on_join_pressed)
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
 	multiplayer.connection_failed.connect(_on_connection_failed)
 	multiplayer.server_disconnected.connect(_on_server_disconnected)
@@ -51,8 +49,8 @@ func _on_host_pressed() -> void:
 	lobby.hide()
 	_spawn_player(1)
 
-func _on_join_pressed() -> void:
-	var err := Network.join_game(ip_edit.text)
+func _on_join_pressed(ip: String) -> void:
+	var err := Network.join_game(ip)
 	if err != OK:
 		status_label.text = "Join failed: %s" % error_string(err)
 		return

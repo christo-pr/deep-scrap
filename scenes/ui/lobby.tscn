@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://m2cv3cwrljnd"]
+
+[ext_resource type="Script" uid="uid://ci7lvo1h4plni" path="res://scripts/ui/lobby.gd" id="1_6oakf"]
+
+[node name="Lobby" type="Control" unique_id=686444939]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6oakf")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1051578497]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -205.0
+offset_top = -99.0
+offset_right = 205.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=718786467]
+layout_mode = 2
+theme_override_constants/separation = 36
+alignment = 1
+
+[node name="HostButton" type="Button" parent="PanelContainer/VBoxContainer" unique_id=931169572]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+text = "Host
+"
+
+[node name="IpEdit" type="LineEdit" parent="PanelContainer/VBoxContainer" unique_id=1000295079]
+unique_name_in_owner = true
+layout_mode = 2
+placeholder_text = "Host IP"
+
+[node name="JoinButton" type="Button" parent="PanelContainer/VBoxContainer" unique_id=1840199548]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+text = "Join"

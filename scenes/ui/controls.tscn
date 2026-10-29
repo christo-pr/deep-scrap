@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://ci4a5ko8crxvo"]
+
+[ext_resource type="Script" uid="uid://crn7k3bsmvom1" path="res://scripts/ui/touch_stick.gd" id="1_fp6ub"]
+
+[node name="Controls" type="Control" unique_id=1106248480]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1339823586]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 110
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 110
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1350939993]
+layout_mode = 2
+
+[node name="TouchStick" type="Control" parent="MarginContainer/HBoxContainer" unique_id=1737886795]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+script = ExtResource("1_fp6ub")
+
+[node name="Button" type="Button" parent="MarginContainer/HBoxContainer" unique_id=1799011239]
+layout_mode = 2
+size_flags_horizontal = 10
+size_flags_vertical = 8
+text = "action"
