@@ -29,14 +29,6 @@ script = ExtResource("1_8oek8")
 color = Color(0.09320182, 0.4788676, 0.76862043, 0.35000002)
 polygon = PackedVector2Array(-2000, 0, 2000, 0, 2000, 4000, -2000, 4000)
 
-[node name="RockA" type="Polygon2D" parent="Water" unique_id=1658278378]
-position = Vector2(27, 62)
-polygon = PackedVector2Array(15, 38, 34, 30, 40, 38, 38, 47, 20, 53)
-
-[node name="RockA2" type="Polygon2D" parent="Water" unique_id=985291356]
-position = Vector2(118, 85)
-polygon = PackedVector2Array(15, 38, 34, 30, 40, 38, 38, 47, 20, 53)
-
 [node name="Surface" type="Line2D" parent="Water" unique_id=1387494726]
 z_index = 1
 points = PackedVector2Array(-2000, 0, 2000, 0)
