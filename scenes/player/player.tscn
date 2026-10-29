@@ -535,7 +535,7 @@ properties/2/replication_mode = 2
 
 [node name="Player" type="CharacterBody2D" unique_id=135042252]
 collision_layer = 2
-collision_mask = 2
+collision_mask = 5
 motion_mode = 1
 script = ExtResource("1_8afob")
 

@@ -12,7 +12,8 @@ size = Vector2(4000, 4000)
 
 [node name="TopLimit" type="StaticBody2D" parent="." unique_id=1313197874]
 position = Vector2(0, 360)
-collision_layer = 2
+collision_layer = 4
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TopLimit" unique_id=487716912]
 shape = SubResource("SegmentShape2D_8oek8")
@@ -20,7 +21,6 @@ debug_color = Color(0.7014107, 0.12315822, 0.3264042, 0.592)
 
 [node name="Water" type="Area2D" parent="." unique_id=1488337810]
 position = Vector2(640, 360)
-collision_layer = 0
 collision_mask = 2
 monitorable = false
 script = ExtResource("1_8oek8")

@@ -7,8 +7,11 @@ const PLAYER_SCENE := preload("uid://dejvf2we711bk")
 @onready var lobby: Control = %Lobby
 @onready var status_label: Label = %StatusLabel
 @onready var ip_edit: LineEdit = %IpEdit
+@onready var spawn_point: Marker2D = $Players/SpawnPoint
+@onready var spawner: MultiplayerSpawner = $MultiplayerSpawner
 
 func _ready() -> void:
+	spawner.spawn_function = _make_player
 	ip_edit.text = Network.lan_ip()
 	%HostButton.pressed.connect(_on_host_pressed)
 	%JoinButton.pressed.connect(_on_join_pressed)
@@ -19,10 +22,16 @@ func _ready() -> void:
 func _spawn_player(id: int) -> void:
 	if players.has_node(str(id)):
 		return
+	spawner.spawn({
+		"id": id,
+		"position": spawn_point.position,
+	})
+
+func _make_player(data: Dictionary) -> Node:
 	var player := PLAYER_SCENE.instantiate()
-	player.name = str(id)
-	player.position = Vector2(640, 360) if id == 1 else Vector2(760, 360)
-	players.add_child(player, true)
+	player.name = str(data["id"])
+	player.position = data["position"]
+	return player
 
 # ===== RCP METHODS =====
 @rpc("any_peer", "reliable")
