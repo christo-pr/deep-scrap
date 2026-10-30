@@ -2,6 +2,8 @@ extends Node2D
 
 # Player scene at scenes/player
 const PLAYER_SCENE := preload("uid://dejvf2we711bk")
+# Pickup scene at scenes/props/kelp_pickup
+const PICKUP_SCENE = preload("uid://itponffx0uyf")
 
 @onready var players: Node2D = %Players
 @onready var lobby: Lobby = %Lobby
@@ -31,6 +33,7 @@ func _make_player(data: Dictionary) -> Node:
 	player.position = data["position"]
 	var hands := player.get_node("Carry") as Carry
 	hands.place_requested.connect(_spawn_prop)
+	hands.throw_requested.connect(_spawn_pickup)
 	return player
 
 # ===== RCP METHODS =====
@@ -81,3 +84,11 @@ func _spawn_prop(scene: PackedScene, at: Vector2) -> void:
 	var prop := scene.instantiate()
 	prop.global_position = at
 	%Props.add_child(prop)
+
+func _spawn_pickup(item: ItemData, count: int, at: Vector2, direction: Vector2, thrower: Player) -> void:
+	var pickup := PICKUP_SCENE.instantiate() as Pickup
+	pickup.item = item
+	pickup.count = count
+	pickup.global_position = at + direction * 110.0
+	%Props.add_child(pickup)
+	pickup.launch(direction, thrower)

@@ -3,6 +3,7 @@ class_name Carry
 
 signal changed
 signal place_requested(scene: PackedScene, at: Vector2)
+signal throw_requested(item: ItemData, count: int, at: Vector2, direction: Vector2, thrower: Player)
 
 const HANDS := 4
 
@@ -17,6 +18,15 @@ func try_add(item: ItemData, count: int) -> int:
 
 func select_slot(index: int) -> void:
 	data.select(index)
+
+func throw_selected() -> void:
+	var player := get_parent() as Player
+	if player == null:
+		return
+	var taken := data.take_selected()
+	if taken == null:
+		return
+	throw_requested.emit(taken.item, taken.count, player.global_position, player.facing_vector(), player)
 
 func use_selected() -> void:
 	var slot := data.current()

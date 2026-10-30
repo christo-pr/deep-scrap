@@ -42,6 +42,9 @@ func _physics_process(delta: float) -> void:
 	
 	if Input.is_action_just_pressed(&"use_carry"):
 		carry.use_selected()
+		
+	if Input.is_action_just_pressed(&"throw_carry"):
+		carry.throw_selected()
 
 	var direction := Vector2.ZERO
 	if not _is_attacking:
@@ -69,6 +72,16 @@ func apply_grant(stat: StringName, amount: float) -> void:
 		air = minf(air + amount, air_max)
 	# TODO: More grants to add
 
+func facing_vector() -> Vector2:
+	match playerVisuals.facing:
+		PlayerVisuals.Facing.LEFT:
+			return Vector2.LEFT
+		PlayerVisuals.Facing.UP:
+			return Vector2.UP
+		PlayerVisuals.Facing.DOWN:
+			return Vector2.DOWN
+		_:
+			return Vector2.RIGHT
 # ===== RCP METHODS =====
 @rpc("authority", "call_local", "reliable")
 func net_play_attack(anim: String, flip: bool) -> void:

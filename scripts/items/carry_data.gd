@@ -58,3 +58,15 @@ func consume_one() -> void:
 		slot.item = null
 		slot.count = 0
 	changed.emit()
+
+func take_selected() -> CarrySlot:
+	var slot := current()
+	if slot == null or slot.item == null or slot.count <= 0:
+		return null
+	var taken := CarrySlot.new()
+	taken.item = slot.item
+	taken.count = slot.count
+	slot.item = null
+	slot.count = 0
+	changed.emit()
+	return taken

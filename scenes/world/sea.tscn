@@ -24,12 +24,12 @@ position = Vector2(640, 370)
 unique_name_in_owner = true
 
 [node name="KelpPickup" parent="Props" unique_id=1358754974 instance=ExtResource("3_srmhl")]
-position = Vector2(872, 524)
+position = Vector2(398, 524)
 item = ExtResource("4_hksmn")
 count = 20
 
 [node name="KelpPickup2" parent="Props" unique_id=1707483621 instance=ExtResource("3_srmhl")]
-position = Vector2(872, 708)
+position = Vector2(301, 652)
 item = ExtResource("5_lb5qf")
 count = 1
 
@@ -58,7 +58,7 @@ position = Vector2(1013, 830)
 count = 20
 
 [node name="KelpPickup9" parent="Props" unique_id=195261311 instance=ExtResource("3_srmhl")]
-position = Vector2(1013, 684)
+position = Vector2(943, 745)
 count = 20
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1284499140]
