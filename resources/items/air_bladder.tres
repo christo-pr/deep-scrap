@@ -1,11 +1,13 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://cesrtommthf11"]
 
 [ext_resource type="Script" uid="uid://dix7xo76h1hle" path="res://scripts/items/items_data.gd" id="1_0aqir"]
+[ext_resource type="Texture2D" uid="uid://b01y1fpkxirqs" path="res://icon.svg" id="1_wxieh"]
 
 [resource]
 script = ExtResource("1_0aqir")
 id = &"air_bledder"
 display_name = "Air Bledder"
+icon = ExtResource("1_wxieh")
 max_stack = 5
 use_kind = 1
 grant_stat = &"air"

@@ -1,10 +1,14 @@
 [gd_resource type="Resource" script_class="ItemData" format=3 uid="uid://b46oiheh8vtxc"]
 
+[ext_resource type="Texture2D" uid="uid://b01y1fpkxirqs" path="res://icon.svg" id="1_d1frx"]
 [ext_resource type="Script" uid="uid://dix7xo76h1hle" path="res://scripts/items/items_data.gd" id="1_tll22"]
+[ext_resource type="PackedScene" uid="uid://cjhieedybwl1" path="res://scenes/props/net_trap.tscn" id="2_tqcd6"]
 
 [resource]
 script = ExtResource("1_tll22")
 id = &"net_trap"
 display_name = "Net Trap"
+icon = ExtResource("1_d1frx")
 use_kind = 2
+place_scene = ExtResource("2_tqcd6")
 metadata/_custom_type_script = "uid://dix7xo76h1hle"

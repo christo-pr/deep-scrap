@@ -4,8 +4,10 @@
 [ext_resource type="PackedScene" uid="uid://50qpwrnpql7r" path="res://scenes/world/water_test.tscn" id="2_51whp"]
 [ext_resource type="PackedScene" uid="uid://ci4a5ko8crxvo" path="res://scenes/ui/controls.tscn" id="3_51whp"]
 [ext_resource type="PackedScene" uid="uid://itponffx0uyf" path="res://scenes/props/kelp_pickup.tscn" id="3_srmhl"]
+[ext_resource type="Resource" uid="uid://cesrtommthf11" path="res://resources/items/air_bladder.tres" id="4_hksmn"]
 [ext_resource type="PackedScene" uid="uid://m2cv3cwrljnd" path="res://scenes/ui/lobby.tscn" id="4_q8u00"]
 [ext_resource type="PackedScene" uid="uid://j10dx41uqpri" path="res://scenes/ui/hot_bar.tscn" id="5_jb7dh"]
+[ext_resource type="Resource" uid="uid://b46oiheh8vtxc" path="res://resources/items/net_trap.tres" id="5_lb5qf"]
 
 [node name="Sea" type="Node2D" unique_id=356611636]
 script = ExtResource("1_dgw6r")
@@ -23,11 +25,13 @@ unique_name_in_owner = true
 
 [node name="KelpPickup" parent="Props" unique_id=1358754974 instance=ExtResource("3_srmhl")]
 position = Vector2(872, 524)
+item = ExtResource("4_hksmn")
 count = 20
 
 [node name="KelpPickup2" parent="Props" unique_id=1707483621 instance=ExtResource("3_srmhl")]
 position = Vector2(872, 708)
-count = 20
+item = ExtResource("5_lb5qf")
+count = 1
 
 [node name="KelpPickup3" parent="Props" unique_id=242237434 instance=ExtResource("3_srmhl")]
 position = Vector2(872, 812)
