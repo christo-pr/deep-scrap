@@ -31,7 +31,7 @@ func bind_player(player: Player) -> void:
 	_refresh()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _player == null or event.is_echo():
+	if _player == null or _player.net_dead or event.is_echo():
 		return
 	for i in SLOT_ACTIONS.size():
 		if not event.is_action_pressed(SLOT_ACTIONS[i]):

@@ -21,6 +21,9 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	facing = player.net_facing as Facing
+	if player.net_dead:
+		_play_death()
+		return
 	_low_air = player.net_low_air
 	sprite.speed_scale = 1.2 if player.net_air_critical else 0.8
 	
@@ -108,8 +111,13 @@ func _apply_sprite(anim: StringName, flip: bool, preserve_frame: bool) -> void:
 			var count := sprite.sprite_frames.get_frame_count(anim)
 			sprite.set_frame_and_progress(mini(frame, count - 1), progress)
 
+func _play_death() -> void:
+	_oneshot_playing = false
+	sprite.speed_scale = 1.0
+	_apply_sprite(&"death", facing == Facing.LEFT, false)
+
 func _on_sprite_animation_finished() -> void:
-	if not _oneshot_playing:
+	if not _oneshot_playing or player.net_dead:
 		return
 	var was_attack := sprite.animation.begins_with("attack")
 	_oneshot_playing = false

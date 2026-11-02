@@ -3,6 +3,8 @@ extends CharacterBody2D
 
 signal air_changed(value: float, max_value: float)
 signal health_changed(value: float, max_value: float)
+signal died
+signal revived
 
 const SPEED := 220.0
 
@@ -14,15 +16,17 @@ const SPEED := 220.0
 @export var net_facing := 0
 @export var net_low_air := false
 @export var net_air_critical := false
+@export var net_dead := false
+
 @export var air_max := 10.0
 @export var air_drain := 1.0
 @export var air_refill := 15
 @export var low_air_threshold := 5.0
 @export var health_max := 100.0
-@export var drowning_damage := 5.0
+@export var drowning_damage := 20.0
 
 var _is_attacking := false
-var _air_log := 0.0
+var _ui_groups := [&"hotbar", &"status_bars", &"death_modal"]
 var is_underwater := false
 var air := air_max:
 	set(value):
@@ -38,6 +42,8 @@ var health := health_max:
 			return
 		health = value
 		health_changed.emit(health, health_max)
+		if is_equal_approx(health, 0.0):
+			_die()
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
@@ -49,7 +55,7 @@ func _ready() -> void:
 	playerVisuals.attack_finished.connect(_on_attack_finished)
 	
 	if is_multiplayer_authority():
-		for group: StringName in [&"hotbar", &"status_bars"]:
+		for group in _ui_groups:
 			var ui := get_tree().get_first_node_in_group(group)
 			if ui != null and ui.has_method(&"bind_player"):
 				ui.bind_player(self)
@@ -57,6 +63,12 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority():
 		return
+
+	if net_dead:
+		velocity = Vector2.ZERO
+		net_moving = false
+		return
+
 
 	if not _is_attacking and Input.is_action_just_pressed(&"attack"):
 		var anim := playerVisuals.attack_anim()
@@ -90,7 +102,6 @@ func _physics_process(delta: float) -> void:
 func set_underwater(under: bool) -> void:
 	is_underwater = under
 	modulate = Color(0.45, 0.7, 1.0) if under else Color.WHITE
-	print("underwater" if under else "surface")
 
 func apply_grant(stat: StringName, amount: float) -> void:
 	if stat == &"air":
@@ -98,9 +109,20 @@ func apply_grant(stat: StringName, amount: float) -> void:
 	# TODO: More grants to add
 
 func take_damage(amount: float) -> void:
+	if net_dead:
+		return
 	health -= amount
-	if health <= 0.0:
-		print("player died")  # TODO: death/respawn
+
+func revive(at: Vector2) -> void:
+	if not is_multiplayer_authority() or not net_dead:
+		return
+	position = at
+	velocity = Vector2.ZERO
+	air = air_max
+	health = health_max
+	_is_attacking = false
+	net_dead = false
+	revived.emit()
 
 func heal(amount: float) -> void:
 	health += amount
@@ -123,6 +145,13 @@ func net_play_attack(anim: String, flip: bool) -> void:
 		_is_attacking = true
 # ===== END RCP METHODS =====
 
+func _die() -> void:
+	net_dead = true
+	net_moving = false
+	velocity = Vector2.ZERO
+	_is_attacking = false
+	died.emit()
+
 func _update_air(delta: float) -> void:
 	if is_underwater:
 		air = maxf(air - air_drain * delta, 0.0)
@@ -132,14 +161,6 @@ func _update_air(delta: float) -> void:
 	net_air_critical = is_underwater and air <= 0
 	if net_air_critical:
 		take_damage(drowning_damage * delta)
-	_air_log += delta
-	
-	if _air_log < 0.5:
-		return
-	_air_log = 0.0
-	print("air %.0f  %s" % [air, "under" if is_underwater else "surface"])
-	if air <= 0.0:
-		print("out of air")
 	
 func _on_attack_finished() -> void:
 	_is_attacking = false

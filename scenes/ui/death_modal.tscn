@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://dqln1v2jk80lh"]
+
+[ext_resource type="Script" uid="uid://cvrmirwkosk2c" path="res://scripts/ui/death_modal.gd" id="1_cvr7c"]
+
+[node name="DeathModal" type="Control" unique_id=1210002983]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cvr7c")
+
+[node name="Dim" type="ColorRect" parent="." unique_id=1375450706]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=177299134]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer" unique_id=1701611753]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer" unique_id=1912492837]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer" unique_id=205401147]
+layout_mode = 2
+text = "You drowned"
+horizontal_alignment = 1
+
+[node name="ReviveButton" type="Button" parent="CenterContainer/PanelContainer/VBoxContainer" unique_id=1266964372]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 60)
+layout_mode = 2
+text = "Revive"

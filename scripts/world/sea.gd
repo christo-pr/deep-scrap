@@ -35,6 +35,12 @@ func request_throw(slot_index: int) -> void:
 func request_use(slot_index: int) -> void:
 	request_use_rpc.rpc_id(1, slot_index)
 
+func request_revive() -> void:
+	var player := _authority_player()
+	if player == null:
+		return
+	player.revive(spawn_point.position)
+
 func _authority_player() -> Player:
 	return players.get_node_or_null(str(multiplayer.get_unique_id())) as Player
 
