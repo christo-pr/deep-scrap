@@ -9,9 +9,13 @@ const SPEED := 220.0
 
 @export var net_moving := false
 @export var net_facing := 0
+@export var net_low_air := false
+@export var net_air_critical := false
 @export var air_max := 30.0
 @export var air_drain := 1.0
 @export var air_refill := 10
+@export var low_air_threshold := 25.0
+@export var critical_air_threshold := 20.0
 
 var _is_attacking := false
 var is_underwater := false
@@ -96,7 +100,8 @@ func _update_air(delta: float) -> void:
 		air = maxf(air - air_drain * delta, 0.0)
 	else:
 		air = minf(air + air_refill * delta, air_max)
-	playerVisuals.set_air_feedback(air, is_underwater)
+	net_low_air = is_underwater and air <= low_air_threshold
+	net_air_critical = is_underwater and air <= critical_air_threshold
 	_air_log += delta
 	if _air_log < 0.5:
 		return

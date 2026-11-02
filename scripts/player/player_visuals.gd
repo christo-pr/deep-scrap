@@ -21,6 +21,9 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	facing = player.net_facing as Facing
+	_low_air = player.net_low_air
+	sprite.speed_scale = 1.2 if player.net_air_critical else 0.8
+	
 	_play_locomotion(player.net_moving)
 
 func play_attack() -> bool:
@@ -67,10 +70,6 @@ func attack_anim() -> StringName:
 	if facing == Facing.UP:
 		return &"attack_up"
 	return &"attack_side"
-
-func set_air_feedback(air_left: float, underwater: bool) -> void:
-	_low_air = underwater and air_left <= 25.0
-	sprite.speed_scale = 1.2 if underwater and air_left <= 20.0 else 0.8
 
 func _play_locomotion(moving: bool) -> void:
 	if _is_locked():
