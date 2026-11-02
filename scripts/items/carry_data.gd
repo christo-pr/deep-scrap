@@ -70,3 +70,42 @@ func take_selected() -> CarrySlot:
 	slot.count = 0
 	changed.emit()
 	return taken
+
+func take_at(index: int) -> CarrySlot:
+	if index < 0 or index >= slots.size():
+		return null
+	selected = index
+	return take_selected()
+
+func consume_at(index: int) -> void:
+	if index < 0 or index >= slots.size():
+		return
+	selected = index
+	consume_one()
+
+func snapshot_ids() -> Array[StringName]:
+	var ids: Array[StringName] = []
+	for slot in slots:
+		ids.append(slot.item.id if slot.item != null else &"")
+	return ids
+
+
+func snapshot_counts() -> Array[int]:
+	var amounts: Array[int] = []
+	for slot in slots:
+		amounts.append(slot.count if slot.item != null else 0)
+	return amounts
+
+
+func apply_snapshot(item_ids: Array, counts: Array) -> void:
+	for i in slots.size():
+		var id := StringName(item_ids[i]) if i < item_ids.size() else &""
+		var amount := int(counts[i]) if i < counts.size() else 0
+		var resolved := ItemCatalog.from_id(id)
+		if resolved == null or amount <= 0:
+			slots[i].item = null
+			slots[i].count = 0
+		else:
+			slots[i].item = resolved
+			slots[i].count = amount
+	changed.emit()

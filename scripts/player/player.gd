@@ -39,12 +39,6 @@ func _physics_process(delta: float) -> void:
 		var anim := playerVisuals.attack_anim()
 		var flip := playerVisuals.facing == PlayerVisuals.Facing.LEFT
 		net_play_attack.rpc(anim, flip)
-	
-	if Input.is_action_just_pressed(&"use_carry"):
-		carry.use_selected()
-		
-	if Input.is_action_just_pressed(&"throw_carry"):
-		carry.throw_selected()
 
 	var direction := Vector2.ZERO
 	if not _is_attacking:
@@ -59,6 +53,14 @@ func _physics_process(delta: float) -> void:
 	net_moving = direction != Vector2.ZERO
 	net_facing = playerVisuals.facing
 	velocity = direction * SPEED
+	
+	# Checks here so the net_moving and net_facing are the values took in 
+	# consideration when doing this
+	if Input.is_action_just_pressed(&"use_carry"):
+		carry.use_selected()
+	if Input.is_action_just_pressed(&"throw_carry"):
+		carry.throw_selected()
+		
 	move_and_slide()
 	_update_air(delta)
 

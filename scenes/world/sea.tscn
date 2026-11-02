@@ -24,47 +24,17 @@ position = Vector2(640, 370)
 unique_name_in_owner = true
 
 [node name="KelpPickup" parent="Props" unique_id=1358754974 instance=ExtResource("3_srmhl")]
-position = Vector2(398, 524)
-item = ExtResource("4_hksmn")
-count = 20
+position = Vector2(618, 532)
 
-[node name="KelpPickup2" parent="Props" unique_id=1707483621 instance=ExtResource("3_srmhl")]
-position = Vector2(301, 652)
+[node name="KelpPickup2" parent="Props" unique_id=1028262540 instance=ExtResource("3_srmhl")]
+position = Vector2(810, 532)
 item = ExtResource("5_lb5qf")
 count = 1
 
-[node name="KelpPickup3" parent="Props" unique_id=242237434 instance=ExtResource("3_srmhl")]
-position = Vector2(872, 812)
-count = 20
-
-[node name="KelpPickup4" parent="Props" unique_id=1201196799 instance=ExtResource("3_srmhl")]
-position = Vector2(872, 951)
-count = 20
-
-[node name="KelpPickup5" parent="Props" unique_id=1967898345 instance=ExtResource("3_srmhl")]
-position = Vector2(872, 1088)
-count = 20
-
-[node name="KelpPickup6" parent="Props" unique_id=14974354 instance=ExtResource("3_srmhl")]
-position = Vector2(1009, 1101)
-count = 20
-
-[node name="KelpPickup7" parent="Props" unique_id=1370197904 instance=ExtResource("3_srmhl")]
-position = Vector2(1013, 974)
-count = 20
-
-[node name="KelpPickup8" parent="Props" unique_id=162114869 instance=ExtResource("3_srmhl")]
-position = Vector2(1013, 830)
-count = 20
-
-[node name="KelpPickup9" parent="Props" unique_id=195261311 instance=ExtResource("3_srmhl")]
-position = Vector2(943, 745)
-count = 20
-
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1284499140]
-_spawnable_scenes = PackedStringArray("uid://dejvf2we711bk")
-spawn_path = NodePath("../Players")
-spawn_limit = 2
+[node name="KelpPickup3" parent="Props" unique_id=515110988 instance=ExtResource("3_srmhl")]
+position = Vector2(458, 534)
+item = ExtResource("4_hksmn")
+count = 5
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=18707520]
 
@@ -79,3 +49,12 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1284499140]
+_spawnable_scenes = PackedStringArray("uid://dejvf2we711bk")
+spawn_path = NodePath("../Players")
+spawn_limit = 2
+
+[node name="WorldSpawner" type="MultiplayerSpawner" parent="." unique_id=922543888]
+_spawnable_scenes = PackedStringArray("uid://itponffx0uyf", "uid://cjhieedybwl1")
+spawn_path = NodePath("../Props")

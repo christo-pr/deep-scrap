@@ -7,6 +7,7 @@ const THROW_DRAG := 360.0
 @export var item: ItemData
 @export var count: int = 1
 
+var networked := false
 var _velocity := Vector2.ZERO
 var _ignored: Node2D
 
@@ -35,12 +36,9 @@ func _on_body_entered(body: Node2D) -> void:
 	var player := body as Player
 	if player == null or not player.is_multiplayer_authority():
 		return
-	var left := player.carry.try_add(item, count)
-	if left == count:
-		return
-	count = left
-	if count <= 0:
-		queue_free()
+	var sea := get_tree().current_scene
+	if sea != null and sea.has_method(&"request_pickup"):
+		sea.request_pickup(name)
 
 func _on_body_exited(body: Node2D) -> void:
 	if body == _ignored:
