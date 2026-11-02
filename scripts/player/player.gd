@@ -1,6 +1,9 @@
 class_name Player
 extends CharacterBody2D
 
+signal air_changed(value: float, max_value: float)
+signal health_changed(value: float, max_value: float)
+
 const SPEED := 220.0
 
 @onready var camera: Camera2D = $Camera2D
@@ -11,29 +14,45 @@ const SPEED := 220.0
 @export var net_facing := 0
 @export var net_low_air := false
 @export var net_air_critical := false
-@export var air_max := 30.0
+@export var air_max := 10.0
 @export var air_drain := 1.0
-@export var air_refill := 10
-@export var low_air_threshold := 25.0
-@export var critical_air_threshold := 20.0
+@export var air_refill := 15
+@export var low_air_threshold := 5.0
+@export var health_max := 100.0
+@export var drowning_damage := 5.0
 
 var _is_attacking := false
-var is_underwater := false
-var air := air_max
 var _air_log := 0.0
+var is_underwater := false
+var air := air_max:
+	set(value):
+		value = clampf(value, 0.0, air_max)
+		if is_equal_approx(value, air):
+			return
+		air = value
+		air_changed.emit(air, air_max)
+var health := health_max:
+	set(value):
+		value = clampf(value, 0.0, health_max)
+		if is_equal_approx(value, health):
+			return
+		health = value
+		health_changed.emit(health, health_max)
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
 
 func _ready() -> void:
 	air = air_max
+	health = health_max
 	camera.enabled = is_multiplayer_authority()
 	playerVisuals.attack_finished.connect(_on_attack_finished)
 	
 	if is_multiplayer_authority():
-		var bar := get_tree().get_first_node_in_group(&"hotbar")
-		if bar != null and bar.has_method(&"bind_player"):
-			bar.bind_player(self)
+		for group: StringName in [&"hotbar", &"status_bars"]:
+			var ui := get_tree().get_first_node_in_group(group)
+			if ui != null and ui.has_method(&"bind_player"):
+				ui.bind_player(self)
 
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority():
@@ -78,6 +97,14 @@ func apply_grant(stat: StringName, amount: float) -> void:
 		air = minf(air + amount, air_max)
 	# TODO: More grants to add
 
+func take_damage(amount: float) -> void:
+	health -= amount
+	if health <= 0.0:
+		print("player died")  # TODO: death/respawn
+
+func heal(amount: float) -> void:
+	health += amount
+
 func facing_vector() -> Vector2:
 	match playerVisuals.facing:
 		PlayerVisuals.Facing.LEFT:
@@ -88,6 +115,7 @@ func facing_vector() -> Vector2:
 			return Vector2.DOWN
 		_:
 			return Vector2.RIGHT
+
 # ===== RCP METHODS =====
 @rpc("authority", "call_local", "reliable")
 func net_play_attack(anim: String, flip: bool) -> void:
@@ -101,8 +129,11 @@ func _update_air(delta: float) -> void:
 	else:
 		air = minf(air + air_refill * delta, air_max)
 	net_low_air = is_underwater and air <= low_air_threshold
-	net_air_critical = is_underwater and air <= critical_air_threshold
+	net_air_critical = is_underwater and air <= 0
+	if net_air_critical:
+		take_damage(drowning_damage * delta)
 	_air_log += delta
+	
 	if _air_log < 0.5:
 		return
 	_air_log = 0.0

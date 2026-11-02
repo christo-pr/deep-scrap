@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://ct1jrbpykhrcj"]
+
+[ext_resource type="Script" uid="uid://db8bk1pc2y3ol" path="res://scripts/ui/status_bars.gd" id="1_r5koo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qoyvc"]
+bg_color = Color(0, 0, 0, 0.6)
+
+[node name="StatusBars" type="Control" unique_id=1978431674]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_r5koo")
+
+[node name="Bars" type="VBoxContainer" parent="." unique_id=1136489273]
+custom_minimum_size = Vector2(240, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -265.0
+offset_top = 25.0
+offset_right = -25.0
+offset_bottom = 65.0
+grow_horizontal = 0
+mouse_filter = 2
+theme_override_constants/separation = 6
+
+[node name="HealthBar" type="ProgressBar" parent="Bars" unique_id=1828059848]
+custom_minimum_size = Vector2(240, 18)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_qoyvc")
+step = 0.0
+show_percentage = false
+
+[node name="AirBar" type="ProgressBar" parent="Bars" unique_id=1565743995]
+custom_minimum_size = Vector2(240, 18)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_qoyvc")
+step = 0.0
+show_percentage = false

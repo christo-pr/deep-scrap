@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://m2cv3cwrljnd" path="res://scenes/ui/lobby.tscn" id="4_q8u00"]
 [ext_resource type="PackedScene" uid="uid://j10dx41uqpri" path="res://scenes/ui/hot_bar.tscn" id="5_jb7dh"]
 [ext_resource type="Resource" uid="uid://b46oiheh8vtxc" path="res://resources/items/net_trap.tres" id="5_lb5qf"]
+[ext_resource type="PackedScene" uid="uid://ct1jrbpykhrcj" path="res://scenes/ui/status_bars.tscn" id="9_ws8hs"]
 
 [node name="Sea" type="Node2D" unique_id=356611636]
 script = ExtResource("1_dgw6r")
@@ -49,6 +50,8 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 offset_right = 40.0
 offset_bottom = 23.0
+
+[node name="StatusBars" parent="UI" unique_id=1978431674 instance=ExtResource("9_ws8hs")]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="." unique_id=1284499140]
 _spawnable_scenes = PackedStringArray("uid://dejvf2we711bk")
