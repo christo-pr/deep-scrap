@@ -11,11 +11,16 @@
 [ext_resource type="Script" uid="uid://d2itkocown0op" path="res://scripts/enemy/enemy_spawn_point.gd" id="6_r7bt2"]
 [ext_resource type="PackedScene" uid="uid://ct1jrbpykhrcj" path="res://scenes/ui/status_bars.tscn" id="9_ws8hs"]
 [ext_resource type="PackedScene" uid="uid://dqln1v2jk80lh" path="res://scenes/ui/death_modal.tscn" id="10_a1lsf"]
+[ext_resource type="PackedScene" uid="uid://dgp6onl84qx51" path="res://scenes/ui/shop_modal.tscn" id="12_e6a2r"]
+[ext_resource type="PackedScene" uid="uid://b88gh4d8kis8c" path="res://scenes/shop/shop_boat.tscn" id="12_k2ci7"]
 
 [node name="Sea" type="Node2D" unique_id=356611636]
 script = ExtResource("1_dgw6r")
 
 [node name="WaterTest" parent="." unique_id=470761294 instance=ExtResource("2_51whp")]
+
+[node name="ShopBoat" parent="." unique_id=1357268925 instance=ExtResource("12_k2ci7")]
+position = Vector2(210, 296)
 
 [node name="Players" type="Node2D" parent="." unique_id=1700782033]
 unique_name_in_owner = true
@@ -88,6 +93,8 @@ offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="StatusBars" parent="UI" unique_id=1978431674 instance=ExtResource("9_ws8hs")]
+
+[node name="ShopModal" parent="UI" unique_id=625481250 instance=ExtResource("12_e6a2r")]
 
 [node name="DeathModal" parent="UI" unique_id=1210002983 instance=ExtResource("10_a1lsf")]
 

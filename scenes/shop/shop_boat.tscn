@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://b88gh4d8kis8c"]
+
+[ext_resource type="Script" uid="uid://dkw3ywcb0abjg" path="res://scripts/shop/shop.gd" id="1_4jod8"]
+[ext_resource type="Texture2D" uid="uid://b01y1fpkxirqs" path="res://icon.svg" id="2_8oy3s"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rgtl3"]
+radius = 160.0
+
+[node name="ShopBoat" type="Area2D" unique_id=1357268925]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_4jod8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=300731918]
+shape = SubResource("CircleShape2D_rgtl3")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1286784841]
+modulate = Color(0.91449994, 0.43, 1, 1)
+scale = Vector2(2, 1)
+texture = ExtResource("2_8oy3s")
+
+[node name="Prompt" type="Label" parent="." unique_id=271710802]
+offset_left = -40.0
+offset_top = -110.0
+offset_right = 24.0
+offset_bottom = -87.0
+text = "[B] Shop"
+horizontal_alignment = 1

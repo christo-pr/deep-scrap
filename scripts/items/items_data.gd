@@ -11,3 +11,4 @@ enum UseKind { NONE, CONSUME, PLACE }
 @export var grant_stat: StringName = &""
 @export var grant_amount: float = 0.0
 @export var place_scene: PackedScene
+@export var sell_value: int = 0

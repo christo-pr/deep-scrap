@@ -109,3 +109,15 @@ func apply_snapshot(item_ids: Array, counts: Array) -> void:
 			slots[i].item = resolved
 			slots[i].count = amount
 	changed.emit()
+
+func take_all_sellable() -> int:
+	var total := 0
+	for slot in slots:
+		if slot.item == null or slot.item.sell_value <= 0:
+			continue
+		total += slot.item.sell_value * slot.count
+		slot.item = null
+		slot.count = 0
+	if total > 0:
+		changed.emit()
+	return total

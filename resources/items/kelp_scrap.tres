@@ -9,4 +9,5 @@ id = &"kelp_scrap"
 display_name = "Kelp Scrap"
 icon = ExtResource("1_gpfwg")
 max_stack = 20
+sell_value = 2
 metadata/_custom_type_script = "uid://dix7xo76h1hle"

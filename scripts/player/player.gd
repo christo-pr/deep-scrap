@@ -5,12 +5,14 @@ signal air_changed(value: float, max_value: float)
 signal health_changed(value: float, max_value: float)
 signal died
 signal revived
+signal shop_toggled(open: bool)
 
 const SPEED := 220.0
 
 @onready var camera: Camera2D = $Camera2D
 @onready var playerVisuals: PlayerVisuals = $Visuals
 @onready var carry: Carry = $Carry
+@onready var wallet: Wallet = $Wallet
 
 @export var net_moving := false
 @export var net_facing := 0
@@ -26,8 +28,10 @@ const SPEED := 220.0
 @export var drowning_damage := 20.0
 
 var _is_attacking := false
-var _ui_groups := [&"hotbar", &"status_bars", &"death_modal"]
+var _ui_groups := [&"hotbar", &"status_bars", &"death_modal", &"shop_modal", &"controls"]
 var is_underwater := false
+var _nearby_shop: Shop
+var is_shopping := false
 var air := air_max:
 	set(value):
 		value = clampf(value, 0.0, air_max)
@@ -69,7 +73,17 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		net_moving = false
 		return
-
+	
+	if Input.is_action_just_pressed(&"shop"):
+		interact()
+		
+	if is_shopping:
+		velocity = Vector2.ZERO
+		net_moving = false
+		if Input.is_action_just_pressed(&"use_carry"):
+			carry.sell_selected()
+		_update_air(delta)
+		return
 
 	if not _is_attacking and Input.is_action_just_pressed(&"attack"):
 		var anim := playerVisuals.attack_anim()
@@ -139,6 +153,26 @@ func facing_vector() -> Vector2:
 		_:
 			return Vector2.RIGHT
 
+func interact() -> void:
+	if not is_multiplayer_authority() or net_dead:
+		return
+	if is_shopping:
+		close_shop()
+	elif _nearby_shop != null:
+		_set_shopping(true)
+
+func close_shop() -> void:
+	_set_shopping(false)
+
+func set_nearby_shop(shop: Shop) -> void:
+	_nearby_shop = shop
+
+func clear_nearby_shop(shop: Shop) -> void:
+	if _nearby_shop != shop:
+		return
+	_nearby_shop = null
+	close_shop()
+
 # ===== RCP METHODS =====
 @rpc("authority", "call_local", "reliable")
 func net_play_attack(anim: String, flip: bool) -> void:
@@ -161,6 +195,7 @@ func net_take_damage(amount: float) -> void:
 # ===== END RCP METHODS =====
 
 func _die() -> void:
+	close_shop()
 	net_dead = true
 	net_moving = false
 	velocity = Vector2.ZERO
@@ -176,6 +211,12 @@ func _update_air(delta: float) -> void:
 	net_air_critical = is_underwater and air <= 0
 	if net_air_critical:
 		take_damage(drowning_damage * delta)
-	
+
+func _set_shopping(open: bool) -> void:
+	if is_shopping == open:
+		return
+	is_shopping = open
+	shop_toggled.emit(open)
+
 func _on_attack_finished() -> void:
 	_is_attacking = false

@@ -38,6 +38,12 @@ func request_throw(slot_index: int) -> void:
 func request_use(slot_index: int) -> void:
 	request_use_rpc.rpc_id(1, slot_index)
 
+func request_sell(slot_index: int) -> void:
+	request_sell_rpc.rpc_id(1, slot_index)
+
+func request_sell_all() -> void:
+	request_sell_all_rpc.rpc_id(1)
+
 func request_revive() -> void:
 	var player := _authority_player()
 	if player == null:
@@ -208,6 +214,46 @@ func _spawn_editor_enemies() -> void:
 			var offset := Vector2(randf_range(-point.spread, point.spread), randf_range(-point.spread, point.spread))
 			spawn_enemy(point.enemy_id, point.global_position + offset)
 
+func _near_shop(player: Player) -> bool:
+	for node in get_tree().get_nodes_in_group(&"shops"):
+		var shop := node as Shop
+		if shop != null and shop.is_in_reach(player.global_position):
+			return true
+	return false
+
+func _apply_sell(peer_id: int, slot_index: int) -> void:
+	var player := players.get_node_or_null(str(peer_id)) as Player
+	if player == null or player.net_dead or not _near_shop(player):
+		return
+	if slot_index < 0 or slot_index >= player.carry.data.slots.size():
+		return
+	var slot := player.carry.data.slots[slot_index]
+	if slot.item == null or slot.item.sell_value <= 0:
+		return
+	var taken := player.carry.data.take_at(slot_index)
+	if taken == null:
+		return
+	player.wallet.add(taken.item.sell_value * taken.count)
+	_replicate_hands(peer_id)
+	_replicate_wallet(peer_id)
+
+func _apply_sell_all(peer_id: int) -> void:
+	var player := players.get_node_or_null(str(peer_id)) as Player
+	if player == null or player.net_dead or not _near_shop(player):
+		return
+	var earned := player.carry.data.take_all_sellable()
+	if earned <= 0:
+		return
+	player.wallet.add(earned)
+	_replicate_hands(peer_id)
+	_replicate_wallet(peer_id)
+
+func _replicate_wallet(peer_id: int) -> void:
+	var player := players.get_node_or_null(str(peer_id)) as Player
+	if player == null:
+		return
+	replicate_wallet.rpc(peer_id, player.wallet.coins)
+
 # ===== RCP METHODS =====
 @rpc("any_peer", "reliable")
 func scene_ready() -> void:
@@ -246,6 +292,25 @@ func grant_stat(peer_id: int, stat: StringName, amount: float) -> void:
 	if player == null:
 		return
 	player.apply_grant(stat, amount)
+
+@rpc("any_peer", "call_local", "reliable")
+func request_sell_rpc(slot_index: int) -> void:
+	if not multiplayer.is_server():
+		return
+	_apply_sell(_sender_id(), slot_index)
+
+@rpc("any_peer", "call_local", "reliable")
+func request_sell_all_rpc() -> void:
+	if not multiplayer.is_server():
+		return
+	_apply_sell_all(_sender_id())
+
+@rpc("authority", "call_local", "reliable")
+func replicate_wallet(peer_id: int, coins: int) -> void:
+	var player := players.get_node_or_null(str(peer_id)) as Player
+	if player == null:
+		return
+	player.wallet.apply_snapshot(coins)
 # ===== END RCP METHODS =====
 
 func _on_host_pressed() -> void:

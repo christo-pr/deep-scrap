@@ -32,3 +32,22 @@ func use_selected() -> void:
 	var sea := get_tree().current_scene
 	if sea != null and sea.has_method(&"request_use"):
 		sea.request_use(data.selected)
+
+func sell_selected() -> void:
+	sell_at(data.selected)
+
+func sell_at(index: int) -> void:
+	var player := get_parent() as Player
+	if player == null or not player.is_multiplayer_authority():
+		return
+	var sea := get_tree().current_scene
+	if sea != null and sea.has_method(&"request_sell"):
+		sea.request_sell(index)
+
+func sell_all() -> void:
+	var player := get_parent() as Player
+	if player == null or not player.is_multiplayer_authority():
+		return
+	var sea := get_tree().current_scene
+	if sea != null and sea.has_method(&"request_sell_all"):
+		sea.request_sell_all()

@@ -44,3 +44,6 @@ mouse_filter = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_qoyvc")
 step = 0.0
 show_percentage = false
+
+[node name="CoinsLabel" type="Label" parent="Bars" unique_id=1658577623]
+layout_mode = 2

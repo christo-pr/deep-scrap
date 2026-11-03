@@ -1,0 +1,109 @@
+[gd_scene format=3 uid="uid://dgp6onl84qx51"]
+
+[ext_resource type="Script" uid="uid://bflxu60o14nv1" path="res://scripts/ui/shop_modal.gd" id="1_jneo7"]
+
+[node name="ShopModal" type="Control" unique_id=625481250]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jneo7")
+
+[node name="Dim" type="ColorRect" parent="." unique_id=1041147981]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=741000815]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CenterContainer" unique_id=679223592]
+custom_minimum_size = Vector2(560, 420)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/PanelContainer" unique_id=1645649902]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer" unique_id=273995358]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Header" type="HBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=527895717]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Header" unique_id=590262213]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Boat Shop"
+
+[node name="CoinsLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Header" unique_id=417191147]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0 Coins"
+
+[node name="CloseButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Header" unique_id=1620948247]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(48, 48)
+layout_mode = 2
+focus_mode = 0
+text = "X"
+
+[node name="Tabs" type="TabContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer" unique_id=1130526695]
+unique_name_in_owner = true
+layout_mode = 2
+current_tab = 0
+
+[node name="Sell" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Tabs" unique_id=999537863]
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="Hint" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Tabs/Sell" unique_id=1457118513]
+layout_mode = 2
+text = "Pick slot 1-4 and press E, or tap Sell"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Tabs/Sell" unique_id=1271359189]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SlotList" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Tabs/Sell/ScrollContainer" unique_id=2094126072]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 8
+
+[node name="EmptyLabel" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Tabs/Sell" unique_id=893691839]
+unique_name_in_owner = true
+layout_mode = 2
+text = "No scrap to sell"
+horizontal_alignment = 1
+
+[node name="SellAllButton" type="Button" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Tabs/Sell" unique_id=1732539809]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+focus_mode = 0
+text = "Sell ALL"
+
+[node name="Buy" type="VBoxContainer" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Tabs" unique_id=551379365]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="Label" type="Label" parent="CenterContainer/PanelContainer/MarginContainer/VBoxContainer/Tabs/Buy" unique_id=1307185690]
+layout_mode = 2
+text = "Comming soon..."
