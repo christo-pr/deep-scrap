@@ -11,12 +11,15 @@ const PICKUP_SCENE = preload("uid://itponffx0uyf")
 @onready var spawner: MultiplayerSpawner = $MultiplayerSpawner
 @onready var status_label: Label = %StatusLabel
 @onready var world_spawner: MultiplayerSpawner = $WorldSpawner
+@onready var enemy_spawner: MultiplayerSpawner = $EnemySpawner
 
 var _world_serial := 0
+var _enemy_serial := 0
 
 func _ready() -> void:
 	spawner.spawn_function = _make_player
 	world_spawner.spawn_function = _make_world_object
+	enemy_spawner.spawn_function = _make_enemy
 	lobby.on_host_pressed.connect(_on_host_pressed)
 	lobby.on_join_pressed.connect(_on_join_pressed)
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
@@ -40,6 +43,16 @@ func request_revive() -> void:
 	if player == null:
 		return
 	player.revive(spawn_point.position)
+
+func spawn_enemy(enemy_id: StringName, at: Vector2) -> void:
+	if not multiplayer.is_server():
+		return
+	enemy_spawner.spawn({
+		"name": "enemy_%d" % _enemy_serial,
+		"enemy_id": enemy_id,
+		"position": at,
+	})
+	_enemy_serial += 1
 
 func _authority_player() -> Player:
 	return players.get_node_or_null(str(multiplayer.get_unique_id())) as Player
@@ -180,6 +193,21 @@ func _publish_editor_pickups() -> void:
 	for spec in specs:
 		_spawn_networked(spec)
 
+func _make_enemy(data: Dictionary) -> Node:
+	var enemy := EnemyCatalog.scene_for(data["enemy_id"]).instantiate()
+	enemy.name = str(data["name"])
+	enemy.position = data["position"]
+	return enemy
+
+func _spawn_editor_enemies() -> void:
+	for child in %EnemySpawns.get_children():
+		var point := child as EnemySpawnPoint
+		if point == null:
+			continue
+		for i in point.count:
+			var offset := Vector2(randf_range(-point.spread, point.spread), randf_range(-point.spread, point.spread))
+			spawn_enemy(point.enemy_id, point.global_position + offset)
+
 # ===== RCP METHODS =====
 @rpc("any_peer", "reliable")
 func scene_ready() -> void:
@@ -230,6 +258,7 @@ func _on_host_pressed() -> void:
 	lobby.hide()
 	_spawn_player(1)
 	_publish_editor_pickups()
+	_spawn_editor_enemies()
 
 func _on_join_pressed(ip: String) -> void:
 	var err := Network.join_game(ip)

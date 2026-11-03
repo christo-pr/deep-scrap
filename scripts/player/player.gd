@@ -47,6 +47,7 @@ var health := health_max:
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(str(name).to_int())
+	add_to_group(&"players")
 
 func _ready() -> void:
 	air = air_max
@@ -143,6 +144,20 @@ func facing_vector() -> Vector2:
 func net_play_attack(anim: String, flip: bool) -> void:
 	if playerVisuals.play_attack_forced(StringName(anim), flip):
 		_is_attacking = true
+
+@rpc("authority", "call_local", "reliable")
+func net_play_hurt() -> void:
+	playerVisuals.hurt()
+
+@rpc("any_peer", "call_local", "reliable")
+func net_take_damage(amount: float) -> void:
+	var sender := multiplayer.get_remote_sender_id()
+	if sender != 0 and sender != 1:
+		return
+	if not is_multiplayer_authority():
+		return
+	take_damage(amount)
+	net_play_hurt.rpc()
 # ===== END RCP METHODS =====
 
 func _die() -> void:

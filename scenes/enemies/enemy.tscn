@@ -1,0 +1,54 @@
+[gd_scene format=3 uid="uid://c8qvfr577cfwd"]
+
+[ext_resource type="Script" uid="uid://vramby8g20nv" path="res://scripts/enemy/enemy.gd" id="1_38ino"]
+[ext_resource type="Script" uid="uid://b15o0ilowjy2r" path="res://scripts/enemy/enemy_visuals.gd" id="2_fcftc"]
+[ext_resource type="Texture2D" uid="uid://b01y1fpkxirqs" path="res://icon.svg" id="3_lu5c6"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nb6gf"]
+atlas = ExtResource("3_lu5c6")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jt03m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nb6gf")
+}],
+"loop": true,
+"name": &"swim",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n7575"]
+size = Vector2(32, 32)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qch6t"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:net_state")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath(".:net_facing_left")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+
+[node name="Enemy" type="CharacterBody2D" unique_id=2042627759]
+collision_layer = 8
+collision_mask = 4
+motion_mode = 1
+script = ExtResource("1_38ino")
+
+[node name="Visuals" type="Node2D" parent="." unique_id=1636307094 node_paths=PackedStringArray("enemy")]
+script = ExtResource("2_fcftc")
+enemy = NodePath("..")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Visuals" unique_id=2099769107]
+sprite_frames = SubResource("SpriteFrames_jt03m")
+animation = &"swim"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=147227579]
+shape = SubResource("RectangleShape2D_n7575")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=363695610]
+replication_config = SubResource("SceneReplicationConfig_qch6t")

@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://7egj1t201i3o"]
+
+[ext_resource type="PackedScene" uid="uid://c8qvfr577cfwd" path="res://scenes/enemies/enemy.tscn" id="1_c2svr"]
+[ext_resource type="Resource" uid="uid://dywejyvg7svhi" path="res://resources/enemies/fish.tres" id="2_7sr2u"]
+
+[node name="Fish" unique_id=2042627759 instance=ExtResource("1_c2svr")]
+data = ExtResource("2_7sr2u")
+
+[node name="Visuals" parent="." index="0" unique_id=1636307094]
+scale = Vector2(0.5, 0.5)
+
+[node name="CollisionShape2D" parent="." index="1" unique_id=147227579]
+scale = Vector2(0.5, 0.5)

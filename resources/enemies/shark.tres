@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://c2ij7j8k3cvrk"]
+
+[ext_resource type="Script" uid="uid://dxqw1khcbpjrj" path="res://scripts/enemy/enemy_data.gd" id="1_hd5la"]
+
+[resource]
+script = ExtResource("1_hd5la")
+chase_speed = 210.0
+aggro_cooldown = 4.0
+metadata/_custom_type_script = "uid://dxqw1khcbpjrj"

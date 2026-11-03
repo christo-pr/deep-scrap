@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3 uid="uid://dywejyvg7svhi"]
+
+[ext_resource type="Script" uid="uid://dxqw1khcbpjrj" path="res://scripts/enemy/enemy_data.gd" id="1_h02m5"]
+
+[resource]
+script = ExtResource("1_h02m5")
+bite_damage = 0.0
+flee_speed = 200.0
+aggressive = false
+detect_radius = 180.0
+flee_duration = 1.5
+aggro_cooldown = 2.0
+metadata/_custom_type_script = "uid://dxqw1khcbpjrj"

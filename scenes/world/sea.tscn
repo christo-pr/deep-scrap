@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://m2cv3cwrljnd" path="res://scenes/ui/lobby.tscn" id="4_q8u00"]
 [ext_resource type="PackedScene" uid="uid://j10dx41uqpri" path="res://scenes/ui/hot_bar.tscn" id="5_jb7dh"]
 [ext_resource type="Resource" uid="uid://b46oiheh8vtxc" path="res://resources/items/net_trap.tres" id="5_lb5qf"]
+[ext_resource type="Script" uid="uid://d2itkocown0op" path="res://scripts/enemy/enemy_spawn_point.gd" id="6_r7bt2"]
 [ext_resource type="PackedScene" uid="uid://ct1jrbpykhrcj" path="res://scenes/ui/status_bars.tscn" id="9_ws8hs"]
 [ext_resource type="PackedScene" uid="uid://dqln1v2jk80lh" path="res://scenes/ui/death_modal.tscn" id="10_a1lsf"]
 
@@ -38,6 +39,40 @@ position = Vector2(458, 534)
 item = ExtResource("4_hksmn")
 count = 5
 
+[node name="Enemies" type="Node2D" parent="." unique_id=515289446]
+unique_name_in_owner = true
+
+[node name="EnemySpawns" type="Node2D" parent="." unique_id=995639848]
+unique_name_in_owner = true
+
+[node name="EnemySpawnPoint" type="Marker2D" parent="EnemySpawns" unique_id=1218230242]
+position = Vector2(210, 983)
+script = ExtResource("6_r7bt2")
+enemy_id = &"fish"
+metadata/_custom_type_script = "uid://d2itkocown0op"
+
+[node name="EnemySpawnPoint2" type="Marker2D" parent="EnemySpawns" unique_id=452437248]
+position = Vector2(1122, 983)
+script = ExtResource("6_r7bt2")
+enemy_id = &"fish"
+metadata/_custom_type_script = "uid://d2itkocown0op"
+
+[node name="EnemySpawnPoint3" type="Marker2D" parent="EnemySpawns" unique_id=1324474577]
+position = Vector2(1122, 699)
+script = ExtResource("6_r7bt2")
+enemy_id = &"fish"
+metadata/_custom_type_script = "uid://d2itkocown0op"
+
+[node name="EnemySpawnPoint4" type="Marker2D" parent="EnemySpawns" unique_id=285449358]
+position = Vector2(764, 1023)
+script = ExtResource("6_r7bt2")
+metadata/_custom_type_script = "uid://d2itkocown0op"
+
+[node name="EnemySpawnPoint5" type="Marker2D" parent="EnemySpawns" unique_id=692972019]
+position = Vector2(461, 1039)
+script = ExtResource("6_r7bt2")
+metadata/_custom_type_script = "uid://d2itkocown0op"
+
 [node name="UI" type="CanvasLayer" parent="." unique_id=18707520]
 
 [node name="Controls" parent="UI" unique_id=1106248480 instance=ExtResource("3_51whp")]
@@ -64,3 +99,6 @@ spawn_limit = 2
 [node name="WorldSpawner" type="MultiplayerSpawner" parent="." unique_id=922543888]
 _spawnable_scenes = PackedStringArray("uid://itponffx0uyf", "uid://cjhieedybwl1")
 spawn_path = NodePath("../Props")
+
+[node name="EnemySpawner" type="MultiplayerSpawner" parent="." unique_id=1451928846]
+spawn_path = NodePath("../Enemies")

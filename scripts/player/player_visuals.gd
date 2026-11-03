@@ -3,6 +3,7 @@ extends Node2D
 
 signal attack_finished
 
+const HURT_DURATION := 0.4
 const AXIS_BIAS := 1.2
 
 enum Facing { RIGHT, LEFT, UP, DOWN }
@@ -14,16 +15,21 @@ enum Facing { RIGHT, LEFT, UP, DOWN }
 var facing := Facing.RIGHT
 var _oneshot_playing := false
 var _low_air := false
+var _hurt_time := 0.0
 
 func _ready() -> void:
 	sprite.play(&"idle_side")
 	sprite.animation_finished.connect(_on_sprite_animation_finished)
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	facing = player.net_facing as Facing
 	if player.net_dead:
 		_play_death()
 		return
+	if _hurt_time > 0.0:
+		_hurt_time -= delta
+		if _hurt_time <= 0.0:
+			_oneshot_playing = false
 	_low_air = player.net_low_air
 	sprite.speed_scale = 1.2 if player.net_air_critical else 0.8
 	
@@ -50,6 +56,7 @@ func hurt() -> void:
 	var anim := &"hurt_up" if facing == Facing.UP else &"hurt_side"
 	_apply_sprite(anim, facing == Facing.LEFT, false)
 	_oneshot_playing = true
+	_hurt_time = HURT_DURATION
 
 func update_facing(direction: Vector2) -> void:
 	var horizontal := absf(direction.x)
@@ -114,6 +121,7 @@ func _apply_sprite(anim: StringName, flip: bool, preserve_frame: bool) -> void:
 func _play_death() -> void:
 	_oneshot_playing = false
 	sprite.speed_scale = 1.0
+	_hurt_time = 0.0
 	_apply_sprite(&"death", facing == Facing.LEFT, false)
 
 func _on_sprite_animation_finished() -> void:
