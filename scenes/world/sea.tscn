@@ -3,9 +3,13 @@
 [ext_resource type="Script" uid="uid://b1o885l7p0i11" path="res://scripts/world/sea.gd" id="1_dgw6r"]
 [ext_resource type="PackedScene" uid="uid://50qpwrnpql7r" path="res://scenes/world/water_test.tscn" id="2_51whp"]
 [ext_resource type="PackedScene" uid="uid://ci4a5ko8crxvo" path="res://scenes/ui/controls.tscn" id="3_51whp"]
+[ext_resource type="Script" uid="uid://c4tb00h2vkkpq" path="res://scripts/items/item_spawner.gd" id="3_sk5vc"]
 [ext_resource type="PackedScene" uid="uid://itponffx0uyf" path="res://scenes/props/kelp_pickup.tscn" id="3_srmhl"]
+[ext_resource type="Script" uid="uid://eihedeyuedhd" path="res://scripts/items/item_spawn_entry.gd" id="4_cmivk"]
 [ext_resource type="Resource" uid="uid://cesrtommthf11" path="res://resources/items/air_bladder.tres" id="4_hksmn"]
 [ext_resource type="PackedScene" uid="uid://m2cv3cwrljnd" path="res://scenes/ui/lobby.tscn" id="4_q8u00"]
+[ext_resource type="Script" uid="uid://drdqxbsdxq62h" path="res://scripts/items/item_spawn_zone.gd" id="4_tytkm"]
+[ext_resource type="Resource" uid="uid://caij3qljr4581" path="res://resources/items/kelp_scrap.tres" id="5_4tqub"]
 [ext_resource type="PackedScene" uid="uid://j10dx41uqpri" path="res://scenes/ui/hot_bar.tscn" id="5_jb7dh"]
 [ext_resource type="Resource" uid="uid://b46oiheh8vtxc" path="res://resources/items/net_trap.tres" id="5_lb5qf"]
 [ext_resource type="Script" uid="uid://d2itkocown0op" path="res://scripts/enemy/enemy_spawn_point.gd" id="6_r7bt2"]
@@ -14,10 +18,48 @@
 [ext_resource type="PackedScene" uid="uid://dgp6onl84qx51" path="res://scenes/ui/shop_modal.tscn" id="12_e6a2r"]
 [ext_resource type="PackedScene" uid="uid://b88gh4d8kis8c" path="res://scenes/shop/shop_boat.tscn" id="12_k2ci7"]
 
+[sub_resource type="Resource" id="Resource_mc2qq"]
+script = ExtResource("4_cmivk")
+item = ExtResource("5_4tqub")
+max_count = 3
+max_depth = 0.6
+surface_weight = 60.0
+metadata/_custom_type_script = "uid://eihedeyuedhd"
+
+[sub_resource type="Resource" id="Resource_gmx7t"]
+script = ExtResource("4_cmivk")
+item = ExtResource("5_lb5qf")
+min_depth = 0.4
+surface_weight = 0.0
+bottom_weight = 15.0
+metadata/_custom_type_script = "uid://eihedeyuedhd"
+
 [node name="Sea" type="Node2D" unique_id=356611636]
 script = ExtResource("1_dgw6r")
 
 [node name="WaterTest" parent="." unique_id=470761294 instance=ExtResource("2_51whp")]
+
+[node name="ItemSpawner" type="Node2D" parent="." unique_id=1860124662 node_paths=PackedStringArray("players")]
+script = ExtResource("3_sk5vc")
+entries = Array[ExtResource("4_cmivk")]([SubResource("Resource_mc2qq"), SubResource("Resource_gmx7t")])
+players = NodePath("../Players")
+
+[node name="RefillTimer" type="Timer" parent="ItemSpawner" unique_id=1066986018]
+
+[node name="ShallowZone" type="Marker2D" parent="ItemSpawner" unique_id=1401305751]
+position = Vector2(640, 650)
+script = ExtResource("4_tytkm")
+size = Vector2(1200, 300)
+
+[node name="MidZone" type="Marker2D" parent="ItemSpawner" unique_id=2117082068]
+position = Vector2(640, 1500)
+script = ExtResource("4_tytkm")
+size = Vector2(1400, 1000)
+
+[node name="DeepZone" type="Marker2D" parent="ItemSpawner" unique_id=710342946]
+position = Vector2(640, 3200)
+script = ExtResource("4_tytkm")
+size = Vector2(1600, 1800)
 
 [node name="ShopBoat" parent="." unique_id=1357268925 instance=ExtResource("12_k2ci7")]
 position = Vector2(210, 296)
@@ -32,15 +74,15 @@ position = Vector2(640, 370)
 unique_name_in_owner = true
 
 [node name="KelpPickup" parent="Props" unique_id=1358754974 instance=ExtResource("3_srmhl")]
-position = Vector2(618, 532)
+position = Vector2(618, 466)
 
 [node name="KelpPickup2" parent="Props" unique_id=1028262540 instance=ExtResource("3_srmhl")]
-position = Vector2(810, 532)
+position = Vector2(810, 466)
 item = ExtResource("5_lb5qf")
 count = 1
 
 [node name="KelpPickup3" parent="Props" unique_id=515110988 instance=ExtResource("3_srmhl")]
-position = Vector2(458, 534)
+position = Vector2(458, 468)
 item = ExtResource("4_hksmn")
 count = 5
 

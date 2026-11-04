@@ -12,6 +12,7 @@ const PICKUP_SCENE = preload("uid://itponffx0uyf")
 @onready var status_label: Label = %StatusLabel
 @onready var world_spawner: MultiplayerSpawner = $WorldSpawner
 @onready var enemy_spawner: MultiplayerSpawner = $EnemySpawner
+@onready var item_spawner: ItemSpawner = $ItemSpawner
 
 var _world_serial := 0
 var _enemy_serial := 0
@@ -20,6 +21,7 @@ func _ready() -> void:
 	spawner.spawn_function = _make_player
 	world_spawner.spawn_function = _make_world_object
 	enemy_spawner.spawn_function = _make_enemy
+	item_spawner.spawn_requested.connect(_on_item_spawn_requested)
 	lobby.on_host_pressed.connect(_on_host_pressed)
 	lobby.on_join_pressed.connect(_on_join_pressed)
 	multiplayer.connected_to_server.connect(_on_connected_to_server)
@@ -174,6 +176,8 @@ func _make_world_object(data: Dictionary) -> Node:
 	pickup.item = ItemCatalog.from_id(data["item_id"])
 	pickup.count = int(data["count"])
 	pickup.position = data["position"]
+	if data.get("wild", false):
+		pickup.add_to_group(ItemSpawner.WILD_GROUP)
 	pickup.set_multiplayer_authority(1)
 	var direction := data["direction"] as Vector2
 	if direction.length() > 0.0:
@@ -322,6 +326,8 @@ func _on_host_pressed() -> void:
 	status_label.text = "Hosting. Other phone joins %s" % Network.lan_ip()
 	lobby.hide()
 	_spawn_player(1)
+	item_spawner.start()
+	# TODO: Remove this once sapwn the items from the server full
 	_publish_editor_pickups()
 	_spawn_editor_enemies()
 
@@ -334,6 +340,7 @@ func _on_join_pressed(ip: String) -> void:
 
 func _on_connected_to_server() -> void:
 	# Clear any local prop, just leave the networked one
+	# TODO: Remove this once we completly spawn the items from the server
 	for child in %Props.get_children():
 		var pickup := child as Pickup
 		if pickup != null and not pickup.networked:
@@ -355,3 +362,14 @@ func _on_peer_disconnected(id: int) -> void:
 	var body := players.get_node_or_null(str(id))
 	if body != null:
 		body.queue_free()
+
+func _on_item_spawn_requested(item_id: StringName, count: int, at: Vector2) -> void:
+	_spawn_networked({
+		"kind": "pickup",
+		"item_id": item_id,
+		"count": count,
+		"position": at,
+		"direction": Vector2.ZERO,
+		"thrower_id": 0,
+		"wild": true,
+	})

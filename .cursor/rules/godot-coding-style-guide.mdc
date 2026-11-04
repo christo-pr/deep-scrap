@@ -1,0 +1,61 @@
+---
+alwaysApply: true
+---
+
+### GDScript script guide:
+
+The following snippet shows the template for how the produces snippets should be:
+
+```
+# class name at the top of the file
+class_name Lobby
+extends Control
+
+# Then any signal
+signal on_host_pressed
+
+# Then any const variable
+const MY_VARIABLE := 0
+
+# Then any @onready variable
+@onready var host_button: Button = %HostButton
+
+# Then any @export variable
+@export var my_config := ""
+
+# Then any built-in function
+func _ready() -> void:
+
+# Then any public function
+func public_fn():
+
+# Then any 'private' function
+func _private_fn():
+
+# Then any RPC when on multiplayer
+@rpc("authority", "call_local", "reliable")
+func remote_call() -> void:
+
+# Then any signal or callback
+func _on_signal_for_something() -> void:
+```
+
+### Variable naming convention
+
+Following snippet shows the naming convention for variables:
+
+```
+extends CharacterBody2D
+
+# const variables always uppercase
+const SPEED := 220.0
+
+# private/internal variables prepend with '_'
+var _is_attacking := false
+
+# public variables just the default snake case
+var is_underwater := true
+```
+
+- All variables should be snake_case
+- Everything should be typed
